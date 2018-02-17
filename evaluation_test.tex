@@ -1,0 +1,53 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=4cm,right=2cm,headsep=10pt]{geometry}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks,
+  citecolor=violet,
+  linkcolor=red,
+  urlcolor=blue}
+\usepackage{listings}
+\usepackage{authblk}
+
+\title{HEPSF Google Summer of Code: Faster Matrix Algebra for ATLAS}
+\author{Dmitry Emeliyanov, Stewart Martin-Haugh}
+\affil{STFC Rutherford Appleton Laboratory}
+
+\begin{document}
+\maketitle
+\section*{Evaluation test}
+
+The goal of the test is to write a standalone C++ class for a symmetric matrix. This will be the starting point for the \href{http://hepsoftwarefoundation.org/gsoc/2018/proposal\_ATLASEigen.html}{project}.
+
+You should store only the upper diagonal of a matrix
+
+\begin{lstlisting}[language=c++]
+SymMat S = {M(0,0), M(0,1), M(0,2),
+                    M(1,1), M(1,2),
+                            M(2,2)};
+\end{lstlisting}
+
+where M is a generic, not necessarily symmetric square matrix.
+
+You should write
+\begin{enumerate}
+\item A constructor to make a SymMat from an Eigen::Matrix
+
+\item Accessors for S(i,j): S(j,i) should of course return the same as S(i,j)
+
+\item Functions for matrix addition:
+\subitem SymMat +/- SymMat
+\subitem SymMat +/- Eigen::Matrix
+
+\item Functions for matrix multiplication:
+\subitem \lstinline{SymMat*SymMat}
+\subitem \lstinline{SymMat*Eigen::Matrix}
+\end{enumerate}
+If the dimensions of the matrices in these functions don't match, you should throw an exception.
+Your code should include a few example test cases. Focus on correctness and commenting your code. \\
+ 
+Your code should be uploaded to e.g. GitHub. It should work with
+\lstinline{clang} or \lstinline{gcc}, C++11 standard on Linux, with clear
+compilation instructions.
+
+\end{document}
